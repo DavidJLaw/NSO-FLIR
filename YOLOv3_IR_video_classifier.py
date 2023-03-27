@@ -50,15 +50,14 @@ while True:
     # Draw bounding boxes and labels of detected objects
     indexes = cv2.dnn.NMSBoxes(boxes, confidences, 0.5, 0.4)
     font = cv2.FONT_HERSHEY_PLAIN
-    colors = np.random.uniform(0, 255, size=(len(boxes), 3))
+    colors = np.random.uniform(50, 255, size=(len(boxes), 3))
     for i in range(len(boxes)):
         if i in indexes:
             x, y, w, h = boxes[i]
             label = str(classes[class_ids[i]])
             color = colors[i]
             cv2.rectangle(frame, (x, y), (x + w, y + h), color, 2)
-            cv2.putText(frame, label, (x, y + 30), font, 3, color, 3)
-            cv2.putText(frame, str(confidences[i]), (x, y + 60), font, 3, color, 3)
+            cv2.putText(frame, f'{label} : {confidences[i]*100:.2f} %', (x, y + 40), font, 3, color, 3)
     # Display the processed frame:
     cv2.imshow("Processed OBS Window", frame)
     # Break the loop when the 'q' key is pressed:
